@@ -20,7 +20,7 @@
                         <input type="text" class="form-control" id="nik" name="nik">
                     </div>
 
-                    <div class="form-group col-6">
+                    <div class="form-group col-lg-6">
                         <label for="ava" class="form-label">Avatar</label>
                         <input id="ava" name="ava" type="file" class="file" data-preview-file-type="text" style="max-width: 100px;">
                     </div>
