@@ -27,15 +27,14 @@ Ini adalah aplikasi web yang dibangun menggunakan framework Laravel.
     php artisan migrate
     ```
 
-9. Jalankan server pengembangan dengan menjalankan perintah:
+9. Untuk menjalankan guanakan xampp server atau sejenisnya. Jalankan seperti app PHP biasa. kunjungi `http://localhost/[nama_folder]`
 
+10. Mungkin error saat menggunakan mode dev 
     ```
-    php artisan serve
-    ```
+    php artisan migrate
+    ``` 
+    env memang disiapkan di share hosting, Mohon maaf :)
 
-10. Buka browser dan kunjungi `http://localhost:8000` untuk melihat aplikasi Anda.
-
-11. Bisa juga dijalankan di xampp server atau sejenisnya. Tinggal jaklankan seperti app PHP biasa. kunjungi `http://localhost/[nama_folder]`
 
 ## Kontribusi
 
