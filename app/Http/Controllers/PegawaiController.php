@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Pegawai;
 use App\Models\Department;
+use App\Models\Pegawai;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -41,6 +41,7 @@ class PegawaiController extends Controller
             'pob' => 'required|min:2',
             'dob' => 'required|min:10',
             'department_id' => 'required|numeric',
+            'ava' => 'required|image|mimes:jpeg,png,jpg|max:2048', // Validasi untuk file avatar
         ]);
 
         if ($validator->fails()) {
@@ -58,6 +59,14 @@ class PegawaiController extends Controller
         $pegawai->department_id = $request->department_id;
         $pegawai->nik = $request->nik;
 
+        // Proses menyimpan file avatar
+        if ($request->hasFile('ava')) {
+            $avatar = $request->file('ava');
+            $filename = time() . '.' . $avatar->getClientOriginalExtension();
+            $avatar->storeAs('public/avatars', $filename); // Simpan file avatar di direktori 'storage/app/public/avatars'
+            $pegawai->ava = $filename;
+        }
+
         try {
             $pegawai->save();
         } catch (\Exception $e) {
@@ -67,6 +76,12 @@ class PegawaiController extends Controller
                 "data" => null,
             ], 500);
         }
+
+        return response()->json([
+            "status" => "ok",
+            "message" => "Data pegawai berhasil disimpan",
+            "data" => $pegawai,
+        ], 201);
     }
 
     /**

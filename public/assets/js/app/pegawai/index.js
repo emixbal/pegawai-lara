@@ -3,72 +3,81 @@ $('#pegawai').DataTable({
     "responsive": true,
 });
 
-$.validator.addMethod("dobFormat", function(value, element) {
-    // Validasi format dengan regular expression
-    return value.match(/^\d{2}\/\d{2}\/\d{4}$/);
-}, "Format tanggal lahir harus DD/MM/YYYY");
-
-$("#employeeForm").validate({
-    rules: {
-        name: {
-            required: true,
-            minlength: 2
-        },
-        nik: {
-            required: true,
-            digits: true,
-            minlength: 16,
-            maxlength: 16
-        },
-        department_id: {
-            required: true
-        },
-        pob: {
-            required: true,
-            minlength: 2
-        },
-        dob: {
-            required: true,
-            dobFormat: true,
-        }
-    },
-    messages: {
-        name: {
-            required: "Nama Pegawai wajib diisi",
-            minlength: "Nama Pegawai harus terdiri dari minimal 2 karakter"
-        },
-        nik: {
-            required: "NIK wajib diisi",
-            digits: "NIK harus berupa angka",
-            minlength: "NIK harus terdiri dari 16 angka",
-            maxlength: "NIK harus terdiri dari 16 angka"
-        },
-        department_id: {
-            required: "Departemen wajib dipilih"
-        },
-        pob: {
-            required: "Tempat Lahir wajib diisi",
-            minlength: "Tempat Lahir harus terdiri dari minimal 2 karakter"
-        },
-        dob: {
-            required: "Tanggal Lahir wajib diisi",
-            date: "Format Tanggal Lahir tidak valid"
-        }
-    },
-    errorElement: 'span',
-    errorPlacement: function (error, element) {
-        error.addClass('invalid-feedback');
-        element.closest('.form-group').append(error);
-    },
-    highlight: function (element, errorClass, validClass) {
-        $(element).addClass('is-invalid').removeClass('is-valid');
-    },
-    unhighlight: function (element, errorClass, validClass) {
-        $(element).addClass('is-valid').removeClass('is-invalid');
-    }
+$("#ava").fileinput({
+    theme: 'fas',
+    showUpload: false,
+    allowedFileExtensions: ["jpg", "jpeg", "png"]
 });
 
 $(document).ready(function () {
+
+    $.validator.addMethod("dobFormat", function (value, element) {
+        // Validasi format dengan regular expression
+        return value.match(/^\d{2}\/\d{2}\/\d{4}$/);
+    }, "Format tanggal lahir harus DD/MM/YYYY");
+
+    $("#employeeForm").validate({
+        rules: {
+            name: {
+                required: true,
+                minlength: 2
+            },
+            nik: {
+                required: true,
+                digits: true,
+                minlength: 16,
+                maxlength: 16
+            },
+            department_id: {
+                required: true
+            },
+            pob: {
+                required: true,
+                minlength: 2
+            },
+            dob: {
+                required: true,
+                dobFormat: true,
+            }
+        },
+        messages: {
+            name: {
+                required: "Nama Pegawai wajib diisi",
+                minlength: "Nama Pegawai harus terdiri dari minimal 2 karakter"
+            },
+            nik: {
+                required: "NIK wajib diisi",
+                digits: "NIK harus berupa angka",
+                minlength: "NIK harus terdiri dari 16 angka",
+                maxlength: "NIK harus terdiri dari 16 angka"
+            },
+            department_id: {
+                required: "Departemen wajib dipilih"
+            },
+            pob: {
+                required: "Tempat Lahir wajib diisi",
+                minlength: "Tempat Lahir harus terdiri dari minimal 2 karakter"
+            },
+            dob: {
+                required: "Tanggal Lahir wajib diisi",
+                date: "Format Tanggal Lahir tidak valid"
+            },
+            ava: {
+                required: true,
+            }
+        },
+        errorElement: 'span',
+        errorPlacement: function (error, element) {
+            error.addClass('invalid-feedback');
+            element.closest('.form-group').append(error);
+        },
+        highlight: function (element, errorClass, validClass) {
+            $(element).addClass('is-invalid').removeClass('is-valid');
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).addClass('is-valid').removeClass('is-invalid');
+        }
+    });
 
     $("#modal_add_btn").on("click", function () {
         $('#modal_add').modal('show');
@@ -76,14 +85,23 @@ $(document).ready(function () {
 
     $("#modal_add_save_btn").on("click", function () {
         if (!$("#employeeForm").valid()) {
-            return
+            return;
         }
 
-        var name = $("#name").val()
-        var nik = $("#nik").val()
-        var pob = $("#pob").val()
-        var dob = $("#dob").val()
-        var department_id = $("#department_id").val()
+        var formData = new FormData();
+        var name = $("#name").val();
+        var nik = $("#nik").val();
+        var pob = $("#pob").val();
+        var dob = $("#dob").val();
+        var department_id = $("#department_id").val();
+        var ava = $("#ava")[0].files[0]; // Ambil file avatar
+
+        formData.append('name', name);
+        formData.append('nik', nik);
+        formData.append('pob', pob);
+        formData.append('dob', dob);
+        formData.append('department_id', department_id);
+        formData.append('ava', ava); // Tambahkan file avatar ke FormData
 
         $.ajax({
             headers: {
@@ -91,25 +109,20 @@ $(document).ready(function () {
             },
             url: `${base_app_url}/pegawai`,
             type: "POST",
-            data: {
-                name, nik, pob, dob, department_id
-            },
+            data: formData, // Gunakan FormData sebagai data
+            contentType: false, // Tidak mengatur tipe konten secara otomatis
+            processData: false, // Tidak memproses data (FormData sudah dalam bentuk yang benar)
             success: async function (response, textStatus, xhr) {
-                toast("sukses")
+                toast("sukses");
                 location.reload();
-                return
             },
             error: function (jqXHR, textStatus, errorThrown) {
-                toast(JSON.stringify(jqXHR?.responseJSON?.message), "warning")
+                toast(JSON.stringify(jqXHR?.responseJSON?.message), "warning");
                 console.log("terjadi kesalahan");
                 console.log(jqXHR, textStatus, errorThrown);
-                return
-            },
-            complete: function (params) {
-                return
             }
         });
-    })
+    });
 
     $(".edit-item-btn").on("click", function (event) {
         event.preventDefault();
