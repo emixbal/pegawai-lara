@@ -1,5 +1,6 @@
 $('#pegawai').DataTable({
-    "paging": false
+    "paging": true,
+    "responsive": true,
 });
 
 $(document).ready(function () {

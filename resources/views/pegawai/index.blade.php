@@ -16,47 +16,55 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <table id="pegawai" class="table nowrap dt-responsive align-middle table-hover" style="width:100%">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Keterangan</th>
-                                <th style="width: 20px">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($data as $pegawai)
+                    <div class="table-responsive">
+                        <table id="pegawai" class="table dt-responsive align-middle table-hover" style="width:100%">
+                            <thead>
                                 <tr>
-                                    <td>{{ $pegawai->name }}</td>
-                                    <td>{{ $pegawai->description }}</td>
-                                    <td>
-                                        <div class="dropdown d-inline-block">
-                                            <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                                data-bs-toggle="dropdown" aria-expanded="false">
-                                                <i class="ri-more-fill align-middle"></i>
-                                            </button>
-                                            <ul class="dropdown-menu dropdown-menu-end">
-                                                <li>
-                                                    <button data="{{ json_encode($pegawai) }}"
-                                                        class="dropdown-item edit-item-btn" id="modal_edit_btn"><i
-                                                            class="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                        Edit
-                                                    </button>
-                                                </li>
-                                                <li>
-                                                    <button data="{{ json_encode($pegawai) }}"
-                                                        class="dropdown-item remove-item-btn">
-                                                        <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                        Delete
-                                                    </button>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </td>
+                                    <th>Name</th>
+                                    <th>NIK</th>
+                                    <th>Tempat Lahir</th>
+                                    <th>Tanggal Lahir</th>
+                                    <th>Departemen</th>
+                                    <th style="width: 20px">Action</th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @foreach ($data as $pegawai)
+                                    <tr>
+                                        <td>{{ $pegawai->name }}</td>
+                                        <td>{{ $pegawai->nik }}</td>
+                                        <td>{{ $pegawai->pob }}</td>
+                                        <td>{{ $pegawai->dob }}</td>
+                                        <td>{{ $pegawai->department->name }}</td>
+                                        <td>
+                                            <div class="dropdown d-inline-block">
+                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
+                                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class="ri-more-fill align-middle"></i>
+                                                </button>
+                                                <ul class="dropdown-menu dropdown-menu-end">
+                                                    <li>
+                                                        <button data="{{ json_encode($pegawai) }}"
+                                                            class="dropdown-item edit-item-btn" id="modal_edit_btn"><i
+                                                                class="ri-pencil-fill align-bottom me-2 text-muted"></i>
+                                                            Edit
+                                                        </button>
+                                                    </li>
+                                                    <li>
+                                                        <button data="{{ json_encode($pegawai) }}"
+                                                            class="dropdown-item remove-item-btn">
+                                                            <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
+                                                            Delete
+                                                        </button>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -69,6 +77,17 @@
 @endsection
 
 @section('css')
+    <style>
+
+        /* Responsif untuk tampilan seluler */
+        @media (max-width: 768px) {
+            .table-responsive {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+        }
+    </style>
+
     <!--datatable css-->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" />
     <!--datatable responsive css-->

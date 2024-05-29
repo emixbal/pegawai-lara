@@ -15,7 +15,7 @@ class PegawaiController extends Controller
      */
     public function index()
     {
-        $data = Pegawai::whereNull("deleted_at")->get();
+        $data = Pegawai::with('department')->whereNull("deleted_at")->get();
         $departments = Department::whereNull("deleted_at")->get();
 
         $pass = [
