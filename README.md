@@ -1,6 +1,7 @@
-# Nama Aplikasi
+# Aplikasi Pegawai
 
 Ini adalah aplikasi web yang dibangun menggunakan framework Laravel.
+Oleh Muhammad Iqbal
 
 ## Instalasi
 
@@ -31,7 +32,7 @@ Ini adalah aplikasi web yang dibangun menggunakan framework Laravel.
 
 10. Mungkin error saat menggunakan mode dev 
     ```
-    php artisan migrate
+    php artisan serve
     ``` 
     env memang disiapkan di share hosting, Mohon maaf :)
 
