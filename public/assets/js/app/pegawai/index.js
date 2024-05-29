@@ -3,12 +3,82 @@ $('#pegawai').DataTable({
     "responsive": true,
 });
 
+$.validator.addMethod("dobFormat", function(value, element) {
+    // Validasi format dengan regular expression
+    return value.match(/^\d{2}\/\d{2}\/\d{4}$/);
+}, "Format tanggal lahir harus DD/MM/YYYY");
+
+$("#employeeForm").validate({
+    rules: {
+        name: {
+            required: true,
+            minlength: 2
+        },
+        nik: {
+            required: true,
+            digits: true,
+            minlength: 16,
+            maxlength: 16
+        },
+        department_id: {
+            required: true
+        },
+        pob: {
+            required: true,
+            minlength: 2
+        },
+        dob: {
+            required: true,
+            dobFormat: true,
+        }
+    },
+    messages: {
+        name: {
+            required: "Nama Pegawai wajib diisi",
+            minlength: "Nama Pegawai harus terdiri dari minimal 2 karakter"
+        },
+        nik: {
+            required: "NIK wajib diisi",
+            digits: "NIK harus berupa angka",
+            minlength: "NIK harus terdiri dari 16 angka",
+            maxlength: "NIK harus terdiri dari 16 angka"
+        },
+        department_id: {
+            required: "Departemen wajib dipilih"
+        },
+        pob: {
+            required: "Tempat Lahir wajib diisi",
+            minlength: "Tempat Lahir harus terdiri dari minimal 2 karakter"
+        },
+        dob: {
+            required: "Tanggal Lahir wajib diisi",
+            date: "Format Tanggal Lahir tidak valid"
+        }
+    },
+    errorElement: 'span',
+    errorPlacement: function (error, element) {
+        error.addClass('invalid-feedback');
+        element.closest('.form-group').append(error);
+    },
+    highlight: function (element, errorClass, validClass) {
+        $(element).addClass('is-invalid').removeClass('is-valid');
+    },
+    unhighlight: function (element, errorClass, validClass) {
+        $(element).addClass('is-valid').removeClass('is-invalid');
+    }
+});
+
 $(document).ready(function () {
+
     $("#modal_add_btn").on("click", function () {
         $('#modal_add').modal('show');
     })
 
     $("#modal_add_save_btn").on("click", function () {
+        if (!$("#employeeForm").valid()) {
+            return
+        }
+
         var name = $("#name").val()
         var nik = $("#nik").val()
         var pob = $("#pob").val()
