@@ -75,11 +75,13 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap.min.css" />
 
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css">
+
 @stop
 
 @section('js')
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
-    <script src="{{ url('public/assets/js/app/pegawai/index.js') }}"></script>
     <script src="{{ url('public') }}/assets/libs/cleave.js/cleave.min.js"></script>
+
+    <script src="{{ url('public/assets/js/app/pegawai/index.js') }}"></script>
 @stop

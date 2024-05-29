@@ -2,7 +2,6 @@ $('#pegawai').DataTable({
     "paging": false
 });
 
-
 $(document).ready(function () {
     $("#modal_add_btn").on("click", function () {
         $('#modal_add').modal('show');
@@ -10,7 +9,7 @@ $(document).ready(function () {
 
     $("#modal_add_save_btn").on("click", function () {
         var name = $("#name").val()
-        var description = $("#description").val()
+        var nik = $("#nik").val()
         var pob = $("#pob").val()
         var dob = $("#dob").val()
         var department_id = $("#department_id").val()
@@ -22,8 +21,7 @@ $(document).ready(function () {
             url: `${base_app_url}/pegawai`,
             type: "POST",
             data: {
-                name,
-                description
+                name, nik, pob, dob, department_id
             },
             success: async function (response, textStatus, xhr) {
                 toast("sukses")
@@ -31,15 +29,12 @@ $(document).ready(function () {
                 return
             },
             error: function (jqXHR, textStatus, errorThrown) {
-                toast(jqXHR?.responseJSON?.message,"warning")
+                toast(JSON.stringify(jqXHR?.responseJSON?.message), "warning")
                 console.log("terjadi kesalahan");
                 console.log(jqXHR, textStatus, errorThrown);
                 return
             },
             complete: function (params) {
-                $("#name").val('')
-                $("#description").val('')
-                $('#modal_add').modal('hide');
                 return
             }
         });
@@ -78,7 +73,7 @@ $(document).ready(function () {
                 return
             },
             error: function (jqXHR, textStatus, errorThrown) {
-                toast(jqXHR?.responseJSON?.message,"warning")
+                toast(jqXHR?.responseJSON?.message, "warning")
                 console.log("terjadi kesalahan");
                 console.log(jqXHR, textStatus, errorThrown);
                 return
@@ -121,7 +116,7 @@ $(document).ready(function () {
                 return
             },
             error: function (jqXHR, textStatus, errorThrown) {
-                toast(jqXHR?.responseJSON?.message,"warning")
+                toast(jqXHR?.responseJSON?.message, "warning")
                 console.log("terjadi kesalahan");
                 console.log(jqXHR, textStatus, errorThrown);
                 return

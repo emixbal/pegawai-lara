@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('pegawais', function (Blueprint $table) {
             $table->id();
             $table->string('name', 100);
+            $table->string('nik', 16)->unique();
             $table->string('pob', 100);
             $table->date('dob');
             $table->timestamps();

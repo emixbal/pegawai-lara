@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pegawai;
+use App\Models\Department;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -15,6 +16,7 @@ class PegawaiController extends Controller
     public function index()
     {
         $data = Pegawai::whereNull("deleted_at")->get();
+        $departments = Department::whereNull("deleted_at")->get();
 
         $pass = [
             "page" => [
@@ -22,6 +24,7 @@ class PegawaiController extends Controller
                 "title" => "Pegawai",
             ],
             "data" => $data,
+            "departments" => $departments,
         ];
 
         return view("pegawai/index", $pass);
@@ -34,6 +37,7 @@ class PegawaiController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|min:2',
+            'nik' => 'required|numeric|digits:16|unique:pegawais,nik',
             'pob' => 'required|min:2',
             'dob' => 'required|min:10',
             'department_id' => 'required',
@@ -52,22 +56,17 @@ class PegawaiController extends Controller
         $pegawai->pob = $request->pob;
         $pegawai->dob = date("Y-m-d", strtotime(str_replace('/', '-', $request->dob)));
         $pegawai->department_id = $request->department_id;
+        $pegawai->nik = $request->nik;
 
-        // try {
-        //     $pegawai->save();
-        // } catch (\Exception $e) {
-        //     return response()->json([
-        //         "status" => "nok",
-        //         "message" => $e,
-        //         "data" => null,
-        //     ], 500);
-        // }
-
-        return response()->json([
-            "status" => "ok",
-            "message" => "sukses",
-            "data" => $pegawai,
-        ], 200);
+        try {
+            $pegawai->save();
+        } catch (\Exception $e) {
+            return response()->json([
+                "status" => "nok",
+                "message" => $e,
+                "data" => null,
+            ], 500);
+        }
     }
 
     /**
