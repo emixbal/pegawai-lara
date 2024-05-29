@@ -40,7 +40,7 @@ class PegawaiController extends Controller
             'nik' => 'required|numeric|digits:16|unique:pegawais,nik',
             'pob' => 'required|min:2',
             'dob' => 'required|min:10',
-            'department_id' => 'required',
+            'department_id' => 'required|numeric',
         ]);
 
         if ($validator->fails()) {
@@ -105,7 +105,10 @@ class PegawaiController extends Controller
 
         $now = date('Y-m-d H:i:s');
         $pegawai->name = $request->name;
-        $pegawai->description = $request->description;
+        $pegawai->pob = $request->pob;
+        $pegawai->dob = date("Y-m-d", strtotime(str_replace('/', '-', $request->dob)));
+        $pegawai->department_id = $request->department_id;
+        $pegawai->nik = $request->nik;
         $pegawai->updated_at = $now;
 
         try {

@@ -15,17 +15,43 @@
                     <label for="name_edit" class="form-label">Nama Pegawai</label>
                     <input type="text" class="form-control" id="name_edit" name="name_edit">
                 </div>
-                <div class="form-group">
-                    <label for="description_edit" class="form-label">Keterangan</label>
-                    <textarea class="form-control" id="description_edit" rows="3" name="description_edit"></textarea>
+
+                <div class="form-group mt-2">
+                    <label for="nik_edit" class="form-label">NIK</label>
+                    <input type="text" class="form-control" id="nik_edit" name="nik_edit">
                 </div>
-            </div>
 
-            <div class="modal-footer">
-                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Batalkan</button>
-                <button type="button" class="btn btn-primary" id="modal_edit_save_btn">Simpan Data</button>
-            </div>
+                <div class="form-group mt-2">
+                    <label for="department_id_edit" class="form-label">Departemen</label>
+                    <select name="department_id_edit" id="department_id_edit" class="form-select">
+                        <option value="">Select Departemen...</option>
+                        @foreach ($departments as $department)
+                            <option value="{{ $department->id }}">{{ $department->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
 
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+                <div class="row mt-2">
+                    <div class="col-6">
+                        <div class="mb-3">
+                            <label for="pob_edit" class="form-label">Tempat Lahir</label>
+                            <input type="text" class="form-control" id="pob_edit" name="pob_edit">
+                        </div>
+                    </div><!--end col-->
+                    <div class="col-6">
+                        <div class="mb-3">
+                            <label for="cleave-date" class="form-label">Tanggal Lahir</label>
+                            <input type="text" class="form-control" placeholder="DD/MM/YYYY" id="dob_edit" name="dob_edit">
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Batalkan</button>
+                    <button type="button" class="btn btn-primary" id="modal_edit_save_btn">Simpan Data</button>
+                </div>
+
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->

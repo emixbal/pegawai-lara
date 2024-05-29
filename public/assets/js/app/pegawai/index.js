@@ -48,7 +48,15 @@ $(document).ready(function () {
 
         $("#id_edit").val(pegawai.id)
         $("#name_edit").val(pegawai.name)
-        $("#description_edit").val(pegawai.description)
+        $("#nik_edit").val(pegawai.nik)
+        $("#pob_edit").val(pegawai.pob)
+        $("#dob_edit").val(pegawai.dob)
+        $("#department_id_edit").val(pegawai.department_id)
+
+        var defaultDepartmentId = pegawai.department_id;
+        if (defaultDepartmentId) {
+            $('#department_id_edit').val(defaultDepartmentId);
+        }
 
         $('#modal_edit').modal('show');
     })
@@ -56,7 +64,10 @@ $(document).ready(function () {
     $("#modal_edit_save_btn").on("click", function () {
         var id = $("#id_edit").val()
         var name = $("#name_edit").val()
-        var description = $("#description_edit").val()
+        var nik = $("#nik_edit").val()
+        var department_id = $("#department_id_edit").val()
+        var pob = $("#pob_edit").val()
+        var dob = $("#dob_edit").val()
 
         $.ajax({
             headers: {
@@ -65,8 +76,7 @@ $(document).ready(function () {
             url: `${base_app_url}/pegawai/${id}`,
             type: "PUT",
             data: {
-                name,
-                description
+                name, nik, department_id, pob, dob
             },
             success: async function (response, textStatus, xhr) {
                 toast("sukses")
@@ -74,7 +84,7 @@ $(document).ready(function () {
                 return
             },
             error: function (jqXHR, textStatus, errorThrown) {
-                toast(jqXHR?.responseJSON?.message, "warning")
+                toast(JSON.stringify(jqXHR?.responseJSON?.message), "warning")
                 console.log("terjadi kesalahan");
                 console.log(jqXHR, textStatus, errorThrown);
                 return
