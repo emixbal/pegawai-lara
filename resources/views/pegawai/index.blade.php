@@ -25,6 +25,7 @@
                                     <th>Tempat Lahir</th>
                                     <th>Tanggal Lahir</th>
                                     <th>Departemen</th>
+                                    <th>Ava</th>
                                     <th style="width: 20px">Action</th>
                                 </tr>
                             </thead>
@@ -34,8 +35,13 @@
                                         <td>{{ $pegawai->name }}</td>
                                         <td>{{ $pegawai->nik }}</td>
                                         <td>{{ $pegawai->pob }}</td>
-                                        <td>{{ $pegawai->dob }}</td>
+                                        <td>{{ date('d-m-Y', strtotime($pegawai->dob)) }}</td>
                                         <td>{{ $pegawai->department->name }}</td>
+                                        <td>
+                                            <img src="{{ route('file', ['dir' => 'avatars', 'filename' => $pegawai->ava]) }}"
+                                                alt="Avatar" style="max-width: 50px; max-height: 50px;">
+                                        </td>
+
                                         <td>
                                             <div class="dropdown d-inline-block">
                                                 <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
@@ -78,7 +84,6 @@
 
 @section('css')
     <style>
-
         /* Responsif untuk tampilan seluler */
         @media (max-width: 768px) {
             .table-responsive {
@@ -95,7 +100,9 @@
 
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.4/css/fileinput.min.css" integrity="sha512-yDVMONIXJPPAoULZ92Ygngsn8ZUGB4ejm6fCc6q9ZvdH8blFAOgg75XZSEaAJ5m4E/yPI1BAi5fF2axMHVuZ5w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.4/css/fileinput.min.css"
+        integrity="sha512-yDVMONIXJPPAoULZ92Ygngsn8ZUGB4ejm6fCc6q9ZvdH8blFAOgg75XZSEaAJ5m4E/yPI1BAi5fF2axMHVuZ5w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 @stop
 
