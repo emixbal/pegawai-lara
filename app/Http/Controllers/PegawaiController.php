@@ -61,9 +61,11 @@ class PegawaiController extends Controller
 
         // Proses menyimpan file avatar
         if ($request->hasFile('ava')) {
+
             $avatar = $request->file('ava');
             $filename = time() . '.' . $avatar->getClientOriginalExtension();
-            $avatar->storeAs('public/avatars', $filename); // Simpan file avatar di direktori 'storage/app/public/avatars'
+            $request->ava->move(storage_path('app/public/avatars'), $filename);
+            // $avatar->storeAs('public/avatars', $filename); // Simpan file avatar di direktori 'storage/app/public/avatars'
             $pegawai->ava = $filename;
         }
 
