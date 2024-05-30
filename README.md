@@ -22,10 +22,14 @@ Oleh Muhammad Iqbal
     php artisan key:generate
     ```
 
-8. Migrasikan skema database dengan perintah:
+8. Migrasikan skema database dan jalankan seeder dengan perintah:
 
     ```
     php artisan migrate
+    ```
+
+    ```
+    php artisan db:seed
     ```
 
 9. Untuk menjalankan guanakan xampp server atau sejenisnya. Jalankan seperti app PHP biasa. kunjungi `http://localhost/[nama_folder]`
